@@ -2,6 +2,9 @@ import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
+import MerchantPage from 'src/pages/blog';
+import UserEdit from 'src/sections/user/UserEdit';
+import UserEditInfoMain from 'src/sections/user/UserEditInfoMain';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
@@ -26,7 +29,8 @@ export default function Router() {
         { element: <IndexPage />, index: true },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
-        { path: 'merchants', element: <BlogPage /> },
+        { path: 'merchants', element: <MerchantPage /> },
+        { path: 'user/edit/:id',element:<UserEditInfoMain/> }
       ],
     },
     {
@@ -42,6 +46,5 @@ export default function Router() {
       element: <Navigate to="/404" replace />,
     },
   ]);
-
   return routes;
 }
