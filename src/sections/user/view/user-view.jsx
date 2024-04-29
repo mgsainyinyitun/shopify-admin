@@ -6,23 +6,24 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Iconify from 'src/components/iconify';
-import { renderDelete, renderMoney, renderName, renderRating, renderTaskEdit } from './common';
+import { renderDelete, renderMoney, renderName, renderRating, renderTaskEdit, renderTrueFalse } from './common';
+import { Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 export default function UserPage() {
   const rows = [
     { id: 1, no: 1,edit: '00103939' ,memberId: '00103939', username: 'KoKo', phone: '0944030305', referrer: 'admin', balance: '2004Rs', freeze: false, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
-    { id: 2, no: 2, memberId: '00103934', username: 'MgMg', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
-    { id: 3, no: 3, memberId: '00103934', username: 'Mya Mya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
-    { id: 4, no: 4, memberId: '00103934', username: 'Mya Mya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
-    { id: 5, no: 5, memberId: '00103934', username: 'Mya Mya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: true, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
-    { id: 6, no: 6, memberId: '00103934', username: 'Mya Mya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
-    { id: 7, no: 7, memberId: '00103934', username: 'Mya Mya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
-    { id: 8, no: 8, memberId: '00103934', username: 'Kom', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
-    { id: 9, no: 9, memberId: '00103934', username: 'Tom', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
-    { id: 10, no: 10, memberId: '00103934', username: 'Davis', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
-    { id: 11, no: 11, memberId: '00103934', username: 'Kya Kya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15Rs', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
+    { id: 2, no: 2, memberId: '00103934', username: 'MgMg', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
+    { id: 3, no: 3, memberId: '00103934', username: 'Mya Mya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
+    { id: 4, no: 4, memberId: '00103934', username: 'Mya Mya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
+    { id: 5, no: 5, memberId: '00103934', username: 'Mya Mya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: true, revenue: '15', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
+    { id: 6, no: 6, memberId: '00103934', username: 'Mya Mya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
+    { id: 7, no: 7, memberId: '00103934', username: 'Mya Mya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: true, revenue: '15', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
+    { id: 8, no: 8, memberId: '00103934', username: 'Kom', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
+    { id: 9, no: 9, memberId: '00103934', username: 'Tom', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
+    { id: 10, no: 10, memberId: '00103934', username: 'Davis', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
+    { id: 11, no: 11, memberId: '00103934', username: 'Kya Kya', phone: '0944030305', referrer: 'admin', balance: '2004', freeze: false, revenue: '15', membership: 3, merchant: 'AWS', country: null, language: null, register: '10/18/2024 15:30:00 pm', state: true },
   ];
 
 
@@ -45,7 +46,7 @@ export default function UserPage() {
     { field: 'phone', headerName: 'Phone Number', headerClassName: 'header' },
     { field: 'referrer', headerName: 'Referrer', width: 150, headerClassName: 'header' },
     { field: 'balance', headerName: 'Account Balance', width: 150,renderCell:params=>renderMoney(params) },
-    { field: 'freeze', headerName: 'Freeze', width: 150, headerClassName: 'header' },
+    { field: 'freeze', headerName: 'Freeze', width: 150, renderCell:params=>renderTrueFalse(params)},
     { field: 'revenue', headerName: 'Revenue',renderCell:params=>renderMoney(params) },
     { field: 'membership', headerName: 'Membership', renderCell:params=>renderRating(params) },
     { field: 'merchant', headerName: 'Contracted Merchant', headerClassName: 'header' },
@@ -56,7 +57,7 @@ export default function UserPage() {
   ];
 
   return (
-    <Container>
+    <Box>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={2}>
         <Typography variant="h4">Users</Typography>
         <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
@@ -70,8 +71,8 @@ export default function UserPage() {
           backgroundColor: 'white',
         },
       }}>
-        <DataGrid slots={{ toolbar: GridToolbar }} sx={{ height: '500px' }} rows={rows} columns={columns} />
+        <DataGrid slots={{ toolbar: GridToolbar }} sx={{ height: '70vh' }} rows={rows} columns={columns} />
       </Card>
-    </Container>
+    </Box>
   );
 }

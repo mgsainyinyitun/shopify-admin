@@ -1,9 +1,35 @@
-import { Avatar, Box, Button, FormControlLabel, IconButton, InputAdornment, InputLabel, OutlinedInput, Rating, Stack, Switch, TextField, Typography } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import { useParams } from "react-router-dom";
+import { Backdrop, Box, Fade, FormControlLabel, IconButton, InputAdornment, InputLabel, Modal, OutlinedInput, Rating, Stack, Switch, TextField, Typography } from "@mui/material";
 import { Icon } from "@iconify/react";
-import UserContractInfo from "./UserContractInfo";
-export default function UserEdit({user}) {
+import { useState } from "react";
+import { LoadingButton } from "@mui/lab";
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    borderRadius: '8px',
+    boxShadow: 24,
+    p: 4,
+};
+
+
+export default function UserEdit({ user }) {
+
+    const [open, setOpen] = useState(false);
+    const [cBalance, setCbalace] = useState(0);
+
+    function increaseBalance() {
+        setCbalace(cBalance + 1);
+    }
+    function decreaseBalance() {
+        setCbalace(cBalance - 1);
+    }
+    function balanceChangeSubmit(e) {
+        e.preventDefault();
+        console.log(cBalance);
+    }
 
     return (
         <Box p={3} sx={{ borderRadius: '8px', flex: 1, background: 'white' }} display='flex' justifyContent='space-around'>
@@ -54,22 +80,12 @@ export default function UserEdit({user}) {
                                 startAdornment={<InputAdornment position="start"><Icon icon="material-symbols:wallet" /></InputAdornment>}
                             />
 
-                            <IconButton>
+                            <IconButton onClick={() => setOpen(true)}>
                                 <Icon icon="basil:add-solid" />
                             </IconButton>
                         </Box>
                     </Box>
                 </Stack>
-                {/* <LoadingButton
-                sx={{ marginTop: 3 }}
-                size="large"
-                type="submit"
-                variant="contained"
-                color="inherit"
-                onClick={() => console.log('update')}
-            >
-                Login
-            </LoadingButton> */}
             </Box>
             <Box>
                 <Stack spacing={3}>
@@ -86,6 +102,55 @@ export default function UserEdit({user}) {
                     </Box>
                 </Stack>
             </Box>
-        </Box>
+
+            {/* Pop Up*/}
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={() => setOpen(false)}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                }}
+            >
+                <Fade in={open}>
+                    <Box sx={style}>
+                        <form onSubmit={balanceChangeSubmit}>
+                            <Typography id="transition-modal-title" variant="h6" component="h2">
+                                User Balance
+                            </Typography>
+                            <Box display='flex'>
+                                <IconButton onClick={decreaseBalance}>
+                                    <Icon icon="zondicons:minus-solid" />
+                                </IconButton>
+                                <OutlinedInput
+                                    size="small"
+                                    id="cbalance"
+                                    startAdornment={<InputAdornment position="start"><i>Rs</i></InputAdornment>}
+                                    value={cBalance}
+                                />
+                                <IconButton onClick={increaseBalance}>
+                                    <Icon icon="basil:add-solid" />
+                                </IconButton>
+                            </Box>
+                            <LoadingButton
+                                sx={{ marginTop: 3 }}
+                                size="large"
+                                type="submit"
+                                variant="contained"
+                                color="inherit"
+                                onClick={() => console.log('update')}
+                            >
+                                Change
+                            </LoadingButton>
+                        </form>
+                    </Box>
+                </Fade>
+            </Modal>
+        </Box >
     );
 }

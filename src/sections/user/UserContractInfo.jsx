@@ -1,4 +1,4 @@
-import { Avatar, Box, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Switch, Typography } from "@mui/material";
+import { Avatar, Box, Button, Chip, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Switch, Typography } from "@mui/material";
 
 export default function UserContractInfo() {
     return (
@@ -8,30 +8,27 @@ export default function UserContractInfo() {
             </Typography>
             <Box>
                 <List
-                    sx={{ width: '100%', bgcolor: 'background.paper' }}
+                    sx={{ width: '100%', bgcolor: 'background.paper',borderRadius:'10px' }}
                     subheader={<ListSubheader>Contract Request</ListSubheader>}
                 >
                     <ListItem>
                         <ListItemIcon>
                             <Avatar />
                         </ListItemIcon>
-                        <ListItemText id="switch-list-label-wifi" primary="Shopify Merchant contract Approve Request" />
-                        <Switch
-                            edge="end"
-                        // onChange={handleToggle('wifi')}
-                        // checked={checked.indexOf('wifi') !== -1}
-                        />
+                        <ListItemText id="switch-list-label-wifi" 
+                            primary="Shopify Merchant contract Approve Request"
+                            secondary={<Chip sx={{marginTop:1}} label="APPROVED" size="small" color="success"/>}
+                             />
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
                             <Avatar />
                         </ListItemIcon>
-                        <ListItemText id="switch-list-label-wifi" primary="ABC Merchant contract Approve Request" />
-                        <Switch
-                            edge="end"
-                        // onChange={handleToggle('wifi')}
-                        // checked={checked.indexOf('wifi') !== -1}
-                        />
+                        <ListItemText id="switch-list-label-wifi" 
+                            primary="ABC Merchant contract Approve Request"
+                            secondary={<Chip  sx={{marginTop:1}} label="PENDING" size="small"/>}
+                             />
+                        <Button variant="outlined" size="small">APPROVE</Button>
                     </ListItem>
                 </List>
             </Box>

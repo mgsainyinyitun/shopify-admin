@@ -1,6 +1,7 @@
 // import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 import { Icon, InlineIcon } from '@iconify/react';
-import { Avatar, Button, Chip, IconButton, Rating, Typography } from "@mui/material";
+import { Avatar, Box, Button, Chip, IconButton, Rating, Typography } from "@mui/material";
+import { green, red } from '@mui/material/colors';
 import { Link } from "react-router-dom";
 
 export function renderTaskEdit(params) {
@@ -22,7 +23,7 @@ export function renderTaskEdit(params) {
 export function renderDelete(params, setOpen, setDeleteTask) {
     return (
         <IconButton sx={{ color: 'red' }} onClick={null}>
-           <Icon icon="material-symbols:delete" />
+            <Icon icon="material-symbols:delete" />
         </IconButton>);
 }
 
@@ -37,16 +38,32 @@ export function renderName(params) {
         />)
 }
 
-export function renderRating(params){
+export function renderRating(params) {
     return (
-        <Rating value={params.value} size='small'/>
+        <Rating value={params.value} size='small' />
     )
 }
 
-export function renderMoney(params){
-    return(
+export function renderMoney(params) {
+    return (
         <Typography variant='subtitle2' color='gray'>
             {params.value} <i>Rs</i>
         </Typography>
     )
+}
+
+export function renderTrueFalse(params) {
+    return params.value ?
+        (
+            <Box sx={{ width: "100%", height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Box sx={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'green' }}>
+                </Box>
+            </Box>
+        ) :
+        (
+            <Box sx={{ width: "100%", height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Box sx={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'red' }}>
+                </Box>
+            </Box>
+        );
 }
