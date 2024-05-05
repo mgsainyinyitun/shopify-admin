@@ -43,6 +43,7 @@ export default function UserEdit({ user }) {
                         <OutlinedInput
                             size="small"
                             id="id"
+                            value={user ? user.uid : null}
                             startAdornment={<InputAdornment position="start"><Icon icon="solar:user-id-line-duotone" /></InputAdornment>}
                         />
                     </Box>
@@ -51,6 +52,7 @@ export default function UserEdit({ user }) {
                         <OutlinedInput
                             size="small"
                             id="username"
+                            value={user ? user.username : null}
                             startAdornment={<InputAdornment position="start"><Icon icon="ph:user-thin" /></InputAdornment>}
                         />
                     </Box>
@@ -59,6 +61,7 @@ export default function UserEdit({ user }) {
                         <OutlinedInput
                             size="small"
                             id="phone"
+                            value={user ? user.phone : null}
                             startAdornment={<InputAdornment position="start"><Icon icon="ic:outline-phone" /></InputAdornment>}
                         />
                     </Box>
@@ -67,6 +70,7 @@ export default function UserEdit({ user }) {
                         <OutlinedInput
                             size="small"
                             id="revenue"
+                            value={user ? user.revenue : null}
                             startAdornment={<InputAdornment position="start"><Icon icon="marketeq:wallet-alt" /></InputAdornment>}
                         />
                     </Box>
@@ -77,6 +81,7 @@ export default function UserEdit({ user }) {
                             <OutlinedInput
                                 size="small"
                                 id="balance"
+                                value={user ? user.balance : null}
                                 startAdornment={<InputAdornment position="start"><Icon icon="material-symbols:wallet" /></InputAdornment>}
                             />
 
@@ -90,12 +95,12 @@ export default function UserEdit({ user }) {
             <Box>
                 <Stack spacing={3}>
                     <Box>
-                        <Rating value={5} />
+                        <Rating value={user ? user.membership : null} />
                     </Box>
                     <Box>
                         <FormControlLabel
                             value="freeze"
-                            control={<Switch color="primary" />}
+                            control={<Switch color="primary" checked={user?user.freeze:false}/>}
                             label="Freeze"
                             labelPlacement="top"
                         />

@@ -19,25 +19,48 @@ import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
+import { useForm } from 'react-hook-form';
+import { API_HOST } from 'src/constant';
+import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import { showToast } from '../common/Notification';
 
 // ----------------------------------------------------------------------
 
 export default function LoginView() {
   const theme = useTheme();
-
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
+  const { register, handleSubmit, formState: { errors }, getValues } = useForm();
 
-  const handleClick = () => {
-    router.push('/');
+  const onSubmit = (data) => {
+    console.log(data);
+    // router.push('/');
+    const url = `${API_HOST}/auth/login`;
+    axios.post(url,data)
+        .then(response => {
+            localStorage.setItem('adminAccessToken', response.data.accessToken);
+            localStorage.setItem("admin_id",response.data.uid)
+            localStorage.setItem("login",true);
+            router.push("/");
+        })
+        .catch(error => {
+            console.error(error);
+            showToast(`Login error:${error}`, 'error')
+            localStorage.setItem("login",false);
+        });
   };
 
   const renderForm = (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
         <TextField
+          {...register("username", { required: true })}
+          name="username" label="Username" />
+        {errors.username && <span>This field is required</span>}
+        <TextField
+          {...register("password", { required: true })}
           name="password"
           label="Password"
           type={showPassword ? 'text' : 'password'}
@@ -51,6 +74,7 @@ export default function LoginView() {
             ),
           }}
         />
+        {errors.password && <span>This field is required</span>}
       </Stack>
       <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 3 }}>
         <Link variant="subtitle2" underline="hover">
@@ -63,11 +87,10 @@ export default function LoginView() {
         type="submit"
         variant="contained"
         color="inherit"
-        onClick={handleClick}
       >
         Login
       </LoadingButton>
-    </>
+    </form>
   );
 
   return (
@@ -80,6 +103,7 @@ export default function LoginView() {
         height: 1,
       }}
     >
+    <ToastContainer/>
       <Logo
         sx={{
           position: 'fixed',

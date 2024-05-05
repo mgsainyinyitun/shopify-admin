@@ -3,7 +3,6 @@ import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
 import MerchantPage from 'src/pages/blog';
-import UserEdit from 'src/sections/user/UserEdit';
 import UserEditInfoMain from 'src/sections/user/UserEditInfoMain';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
@@ -16,6 +15,10 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const login = localStorage.getItem('login');
+
+  console.log(login);
+
   const routes = useRoutes([
     {
       element: (
@@ -26,11 +29,11 @@ export default function Router() {
         </DashboardLayout>
       ),
       children: [
-        { element: <IndexPage />, index: true },
-        { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'merchants', element: <MerchantPage /> },
-        { path: 'user/edit/:id',element:<UserEditInfoMain/> }
+        { element: login==='true' ? <IndexPage /> : <Navigate to="/login" replace />, index: true },
+        { path: 'user', element: login==='true' ? <UserPage /> : <Navigate to="/login" replace /> },
+        { path: 'products', element: login==='true' ? <ProductsPage /> : <Navigate to="/login" replace /> },
+        { path: 'merchants', element: login==='true' ? <MerchantPage /> : <Navigate to="/login" replace /> },
+        { path: 'user/edit/:id', element: login==='true' ? <UserEditInfoMain /> : <Navigate to="/login" replace /> }
       ],
     },
     {

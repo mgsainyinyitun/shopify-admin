@@ -1,20 +1,23 @@
 // import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 import { Icon, InlineIcon } from '@iconify/react';
 import { Avatar, Box, Button, Chip, IconButton, Rating, Typography } from "@mui/material";
-import { green, red } from '@mui/material/colors';
 import { Link } from "react-router-dom";
 
 export function renderTaskEdit(params) {
+    console.log(params.value);
     return (
         <IconButton sx={{ color: 'primary.dark' }}>
-            {/* <Link to={`edit/${params.value}`} */}
-            <Link to={`/user/edit/${params.value}`}
+            <Link
+                // to={`/user/edit/${params.value}`}
+                to={{
+                    pathname: `/user/edit/${params.value.uid}`,
+                    state: params.value,
+                }}
                 style={{
                     textDecoration: 'none',
                     textTransform: 'none',
                     color: 'inherit',
                 }}>
-                {/* <EditOutlined /> */}
                 <Icon icon="mage:edit-pen" />
             </Link>
         </IconButton>);
@@ -40,7 +43,7 @@ export function renderName(params) {
 
 export function renderRating(params) {
     return (
-        <Rating value={params.value} size='small' />
+        <Rating readOnly value={params.value} size='small' />
     )
 }
 
@@ -50,6 +53,15 @@ export function renderMoney(params) {
             {params.value} <i>Rs</i>
         </Typography>
     )
+}
+
+export function renderNumber(params) {
+    return (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+            <Avatar sx={{ width: 24, height: 24 }}>
+                {params.value}
+            </Avatar>
+        </Box>);
 }
 
 export function renderTrueFalse(params) {
