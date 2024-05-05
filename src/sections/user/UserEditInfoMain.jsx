@@ -9,11 +9,13 @@ import { API_HOST } from "src/constant";
 
 import UserEdit from "./UserEdit";
 import UserContractInfo from "./UserContractInfo";
+import UserWithdrawPage from "./view/UserWithdrawPage";
 
 export default function UserEditInfoMain(props) {
   const [value, setValue] = useState('1');
   const [user, setUser] = useState([]);
   const [contracts,setContracts] = useState([]);
+  const [withdraws,setWithdraws] = useState([]);
 
   // const user = location.state;
   const { id } = useParams();
@@ -49,8 +51,19 @@ export default function UserEditInfoMain(props) {
       console.log(err);
     })
 
-
-
+    url = `${API_HOST}/admin/withdraw/all`
+    axios.get(url, {
+      mode: 'no-cors',
+      params: {uid:id},
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+    }).then(response => {
+      console.log("withdraw:", response.data);
+      setWithdraws(response.data.withdraws);
+    }).catch(err => {
+      console.log(err);
+    })
   }, [id]);
 
   const handleChange = (event, newValue) => {
@@ -62,7 +75,7 @@ export default function UserEditInfoMain(props) {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="User Information" value="1" />
-            <Tab label="Contaract Information" value="2" />
+            <Tab label="Contract Information" value="2" />
             <Tab label="Topup History" value="3" />
             <Tab label="Withdrawl History" value="4" />
             <Tab label="Ledger Change Log" value="5" />
@@ -72,7 +85,7 @@ export default function UserEditInfoMain(props) {
         <TabPanel value="1"><UserEdit user={user} /></TabPanel>
         <TabPanel value="2"><UserContractInfo contracts={contracts} /></TabPanel>
         <TabPanel value="3">Topup History Page</TabPanel>
-        <TabPanel value="4">Withdrawl History Page</TabPanel>
+        <TabPanel value="4"><UserWithdrawPage uid={id} withdraws={withdraws}/></TabPanel>
         <TabPanel value="5">Ledger log</TabPanel>
         <TabPanel value="6">Oder Information</TabPanel>
       </TabContext>

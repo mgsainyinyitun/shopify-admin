@@ -1,9 +1,15 @@
+import axios from "axios";
 import { useState } from "react";
 import PropTypes from 'prop-types';
 import { Icon } from "@iconify/react";
+import { ToastContainer } from "react-toastify";
 
 import { LoadingButton } from "@mui/lab";
 import { Box, Fade, Modal, Stack, Rating, Switch, Backdrop, IconButton, InputLabel, Typography, OutlinedInput, InputAdornment, FormControlLabel } from "@mui/material";
+
+import { API_HOST } from "src/constant";
+
+import { showToast } from "../common/Notification";
 
 const style = {
     position: 'absolute',
@@ -35,10 +41,30 @@ export default function UserEdit({ user }) {
     function balanceChangeSubmit(e) {
         e.preventDefault();
         console.log(cBalance);
+
+        const url = `${API_HOST}/admin/user/balance/increase`
+        const token = localStorage.getItem('adminAccessToken');
+        const data = {
+            amount:cBalance,
+            uid:user.uid,
+        }
+        axios.post(url,data, {
+            mode: 'no-cors',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        }).then(response => {
+            showToast('Successfully Increase user balance.', 'success')
+            console.log(response.data);
+        }).catch(err => {
+            showToast('There was error increase balance.', 'error')
+            console.log(err);
+        })
     }
 
     return (
         <Box p={3} sx={{ borderRadius: '8px', flex: 1, background: 'white' }} display='flex' justifyContent='space-around'>
+            <ToastContainer/>
             <Box>
                 <Typography mb={3} variant="h4">
                     User Information:
@@ -106,7 +132,7 @@ export default function UserEdit({ user }) {
                     <Box>
                         <FormControlLabel
                             value="freeze"
-                            control={<Switch color="primary" checked={user?user.freeze:false}/>}
+                            control={<Switch color="primary" checked={user ? user.freeze : false} />}
                             label="Freeze"
                             labelPlacement="top"
                         />
@@ -135,7 +161,7 @@ export default function UserEdit({ user }) {
                                 User Balance
                             </Typography>
                             <Box display='flex'>
-                                <IconButton onClick={()=>decreaseBalance()}>
+                                <IconButton onClick={() => decreaseBalance()}>
                                     <Icon icon="zondicons:minus-solid" />
                                 </IconButton>
                                 <OutlinedInput
@@ -144,7 +170,7 @@ export default function UserEdit({ user }) {
                                     startAdornment={<InputAdornment position="start"><i>Rs</i></InputAdornment>}
                                     value={cBalance}
                                 />
-                                <IconButton onClick={()=>increaseBalance()}>
+                                <IconButton onClick={() => increaseBalance()}>
                                     <Icon icon="basil:add-solid" />
                                 </IconButton>
                             </Box>
