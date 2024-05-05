@@ -1,17 +1,20 @@
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 import { Box, Tab } from "@mui/material";
-import { useEffect, useState } from "react";
+import { TabList, TabPanel, TabContext } from "@mui/lab";
+
+import { API_HOST } from "src/constant";
+
 import UserEdit from "./UserEdit";
 import UserContractInfo from "./UserContractInfo";
-import { useLocation, useParams } from "react-router-dom";
-import { API_HOST } from "src/constant";
-import axios from "axios";
 
 export default function UserEditInfoMain(props) {
   const [value, setValue] = useState('1');
   const [user, setUser] = useState([]);
   const [contracts,setContracts] = useState([]);
-  const location = useLocation();
+
   // const user = location.state;
   const { id } = useParams();
 

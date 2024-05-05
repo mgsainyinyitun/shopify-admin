@@ -1,16 +1,35 @@
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+
+import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Iconify from 'src/components/iconify';
-import { renderDelete, renderMoney, renderName, renderNumber, renderRating, renderTaskEdit, renderTrueFalse } from './common';
-import { Box } from '@mui/material';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+
 import { API_HOST } from 'src/constant';
 
+import Iconify from 'src/components/iconify';
+
+import { renderName, renderMoney, renderDelete, renderNumber, renderRating, renderTaskEdit, renderTrueFalse } from './common';
+
 // ----------------------------------------------------------------------
+function prepareData(users) {
+  const pUsers = [];
+  let i = 1;
+  users.forEach(user => {
+    pUsers.push(
+      {
+        no: i,
+        edit: user,
+        delete: user,
+        ...user,
+      })
+    i += 1;
+  });
+  return pUsers;
+}
 
 export default function UserPage() {
   const columns = [
@@ -54,21 +73,6 @@ export default function UserPage() {
     })
   }, []);
 
-  function prepareData(users) {
-    let pUsers = [];
-    let i = 1;
-    users.forEach(user => {
-      pUsers.push(
-        {
-          no: i,
-          edit: user,
-          delete: user,
-          ...user,
-        })
-      i++;
-    });
-    return pUsers;
-  }
 
   return (
     <Box>

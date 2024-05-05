@@ -1,7 +1,10 @@
-import { Backdrop, Box, Fade, FormControlLabel, IconButton, InputAdornment, InputLabel, Modal, OutlinedInput, Rating, Stack, Switch, TextField, Typography } from "@mui/material";
-import { Icon } from "@iconify/react";
 import { useState } from "react";
+import PropTypes from 'prop-types';
+import { Icon } from "@iconify/react";
+
 import { LoadingButton } from "@mui/lab";
+import { Box, Fade, Modal, Stack, Rating, Switch, Backdrop, IconButton, InputLabel, Typography, OutlinedInput, InputAdornment, FormControlLabel } from "@mui/material";
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -14,6 +17,9 @@ const style = {
     p: 4,
 };
 
+UserEdit.propTypes = {
+    user: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default function UserEdit({ user }) {
 
@@ -108,7 +114,7 @@ export default function UserEdit({ user }) {
                 </Stack>
             </Box>
 
-            {/* Pop Up*/}
+            {/* Pop Up */}
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -129,7 +135,7 @@ export default function UserEdit({ user }) {
                                 User Balance
                             </Typography>
                             <Box display='flex'>
-                                <IconButton onClick={decreaseBalance}>
+                                <IconButton onClick={()=>decreaseBalance()}>
                                     <Icon icon="zondicons:minus-solid" />
                                 </IconButton>
                                 <OutlinedInput
@@ -138,7 +144,7 @@ export default function UserEdit({ user }) {
                                     startAdornment={<InputAdornment position="start"><i>Rs</i></InputAdornment>}
                                     value={cBalance}
                                 />
-                                <IconButton onClick={increaseBalance}>
+                                <IconButton onClick={()=>increaseBalance()}>
                                     <Icon icon="basil:add-solid" />
                                 </IconButton>
                             </Box>

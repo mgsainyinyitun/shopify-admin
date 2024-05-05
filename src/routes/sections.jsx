@@ -1,8 +1,9 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
-import DashboardLayout from 'src/layouts/dashboard';
 import MerchantPage from 'src/pages/blog';
+import DashboardLayout from 'src/layouts/dashboard';
+
 import UserEditInfoMain from 'src/sections/user/UserEditInfoMain';
 
 export const IndexPage = lazy(() => import('src/pages/app'));

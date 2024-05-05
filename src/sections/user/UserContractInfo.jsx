@@ -1,14 +1,35 @@
-import { Avatar, Box, Button, Chip, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Typography } from "@mui/material";
-import { renderNumber, renderRating } from "./view/common";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { API_HOST } from "src/constant";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import PropTypes from 'prop-types';
+import { ToastContainer } from "react-toastify";
+
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box, Chip, List, Avatar, Button, ListItem, Typography, ListItemIcon, ListItemText, ListSubheader } from "@mui/material";
+
+import { API_HOST } from "src/constant";
+
 import { showToast } from "../common/Notification";
+import { renderNumber, renderRating } from "./view/common";
 
 function renderNm(params) {
     console.log(params.value.name);
     return params.value.name;
+}
+function prepareData(contracts) {
+    const pContracts = [];
+    let i = 1;
+    contracts.map(contract => {
+        console.log(contract.merchant.name)
+        pContracts.push(
+            {
+                no: i,
+                merchant: contract.merchant.name,
+                rating: contract.merchant.rating,
+                ...contract,
+            })
+        i += 1;
+        return pContracts;
+    });
+    return pContracts;
 }
 
 const columns = [
@@ -21,26 +42,12 @@ const columns = [
     { field: 'contractAt', headerName: 'Contract Date', width: 150 },
 ];
 
+UserContractInfo.propTypes = {
+    contracts: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 export default function UserContractInfo({ contracts }) {
-
     console.log(contracts);
-    function prepareData(contracts) {
-        let pContracts = [];
-        let i = 1;
-        contracts.forEach(contract => {
-            console.log(contract.merchant.name)
-            pContracts.push(
-                {
-                    no: i,
-                    merchant: contract.merchant.name,
-                    rating: contract.merchant.rating,
-                    ...contract,
-                })
-            i++;
-        });
-        return pContracts;
-    }
-
     function contractApproveRequest(contractId) {
         const url = `${API_HOST}/admin/contracts/approve/request`
         const token = localStorage.getItem('adminAccessToken');

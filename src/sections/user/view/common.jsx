@@ -1,7 +1,8 @@
 // import { DeleteOutline, EditOutlined } from "@mui/icons-material";
-import { Icon, InlineIcon } from '@iconify/react';
-import { Avatar, Box, Button, Chip, IconButton, Rating, Typography } from "@mui/material";
+import { Icon } from '@iconify/react';
 import { Link } from "react-router-dom";
+
+import { Box, Chip, Avatar, Rating, IconButton, Typography } from "@mui/material";
 
 export function renderTaskEdit(params) {
     console.log(params.value);
@@ -68,14 +69,12 @@ export function renderTrueFalse(params) {
     return params.value ?
         (
             <Box sx={{ width: "100%", height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Box sx={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'green' }}>
-                </Box>
+                <Box sx={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'green' }}/>
             </Box>
         ) :
         (
             <Box sx={{ width: "100%", height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Box sx={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'red' }}>
-                </Box>
+                <Box sx={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'red' }}/>
             </Box>
         );
 }

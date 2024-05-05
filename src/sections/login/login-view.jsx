@@ -1,11 +1,12 @@
+import axios from 'axios';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ToastContainer } from 'react-toastify';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -15,14 +16,12 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
 
+import { API_HOST } from 'src/constant';
 import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
-import { useForm } from 'react-hook-form';
-import { API_HOST } from 'src/constant';
-import axios from 'axios';
-import { ToastContainer } from 'react-toastify';
+
 import { showToast } from '../common/Notification';
 
 // ----------------------------------------------------------------------
@@ -32,7 +31,7 @@ export default function LoginView() {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
-  const { register, handleSubmit, formState: { errors }, getValues } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);

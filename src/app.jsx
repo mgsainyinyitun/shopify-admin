@@ -7,7 +7,7 @@ import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 
 import Router from 'src/routes/sections';
 import ThemeProvider from 'src/theme';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import { API_HOST } from './constant';
 
@@ -15,12 +15,10 @@ import { API_HOST } from './constant';
 
 export default function App() {
   useScrollToTop();
-  const [login, setLogin] = useState(false);
-  const [username,setUsername] = useState('');
 
   function checkLogin() {
-    let url = `${API_HOST}/auth/check`
-    let token = localStorage.getItem('adminAccessToken');
+    const url = `${API_HOST}/auth/check`
+    const token = localStorage.getItem('adminAccessToken');
     axios.post(url, {
       mode: 'no-cors',
       headers: {
