@@ -17,7 +17,6 @@ export default function UserEditInfoMain(props) {
   const [contracts,setContracts] = useState([]);
   const [withdraws,setWithdraws] = useState([]);
 
-  // const user = location.state;
   const { id } = useParams();
 
   console.log(id);
@@ -32,7 +31,6 @@ export default function UserEditInfoMain(props) {
         'Authorization': `Bearer ${token}`
       },
     }).then(response => {
-      // console.log(response.data);
       setUser(response.data);
     }).catch(err => {
       console.log(err);

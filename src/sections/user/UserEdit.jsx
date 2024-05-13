@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { ToastContainer } from "react-toastify";
 
 import { LoadingButton } from "@mui/lab";
-import { Box, Fade, Modal, Stack, Rating, Switch, Backdrop, IconButton, InputLabel, Typography, OutlinedInput, InputAdornment, FormControlLabel } from "@mui/material";
+import { Box, Fade, Modal, Stack, Rating, Switch, Select, Backdrop, MenuItem, TextField, IconButton, InputLabel, Typography, OutlinedInput, InputAdornment, FormControlLabel } from "@mui/material";
 
 import { API_HOST } from "src/constant";
 
@@ -30,6 +30,8 @@ UserEdit.propTypes = {
 export default function UserEdit({ user }) {
 
     const [open, setOpen] = useState(false);
+    const [mrating, setMrating] = useState(false);
+    const [member, setMember] = useState(user.membership ? user.membership : 0);
     const [cBalance, setCbalace] = useState(0);
 
     function increaseBalance() {
@@ -38,17 +40,42 @@ export default function UserEdit({ user }) {
     function decreaseBalance() {
         setCbalace(cBalance - 1);
     }
+
+
+    function membershipChangeSubmit(e) {
+        e.preventDefault();
+        console.log(member);
+        const url = `${API_HOST}/admin/user/membership/change`
+        const token = localStorage.getItem('adminAccessToken');
+        const data = {
+            membership: member,
+            uid: user.uid,
+        }
+        axios.post(url, data, {
+            mode: 'no-cors',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        }).then(response => {
+            showToast('Successfully Change user membership.', 'success');
+            setMrating(false);
+            console.log(response.data);
+        }).catch(err => {
+            showToast('There was error changing user membership.', 'error')
+            console.log(err);
+            setMrating(false);
+        })
+    }
+
     function balanceChangeSubmit(e) {
         e.preventDefault();
-        console.log(cBalance);
-
         const url = `${API_HOST}/admin/user/balance/increase`
         const token = localStorage.getItem('adminAccessToken');
         const data = {
-            amount:cBalance,
-            uid:user.uid,
+            amount: cBalance,
+            uid: user.uid,
         }
-        axios.post(url,data, {
+        axios.post(url, data, {
             mode: 'no-cors',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -56,15 +83,17 @@ export default function UserEdit({ user }) {
         }).then(response => {
             showToast('Successfully Increase user balance.', 'success')
             console.log(response.data);
+            setOpen(false);
         }).catch(err => {
             showToast('There was error increase balance.', 'error')
             console.log(err);
+            setOpen(false);
         })
     }
 
     return (
         <Box p={3} sx={{ borderRadius: '8px', flex: 1, background: 'white' }} display='flex' justifyContent='space-around'>
-            <ToastContainer/>
+            <ToastContainer />
             <Box>
                 <Typography mb={3} variant="h4">
                     User Information:
@@ -126,8 +155,11 @@ export default function UserEdit({ user }) {
             </Box>
             <Box>
                 <Stack spacing={3}>
-                    <Box>
-                        <Rating value={user ? user.membership : null} />
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Rating value={user ? user.membership : null} readOnly />
+                        <IconButton onClick={() => setMrating(true)}>
+                            <Icon icon="mingcute:edit-4-line" />
+                        </IconButton>
                     </Box>
                     <Box>
                         <FormControlLabel
@@ -164,11 +196,12 @@ export default function UserEdit({ user }) {
                                 <IconButton onClick={() => decreaseBalance()}>
                                     <Icon icon="zondicons:minus-solid" />
                                 </IconButton>
-                                <OutlinedInput
+                                <TextField
                                     size="small"
                                     id="cbalance"
                                     startAdornment={<InputAdornment position="start"><i>Rs</i></InputAdornment>}
                                     value={cBalance}
+                                    onChange={e => setCbalace(e.target.value)}
                                 />
                                 <IconButton onClick={() => increaseBalance()}>
                                     <Icon icon="basil:add-solid" />
@@ -183,6 +216,55 @@ export default function UserEdit({ user }) {
                                 onClick={() => console.log('update')}
                             >
                                 Change
+                            </LoadingButton>
+                        </form>
+                    </Box>
+                </Fade>
+            </Modal>
+
+
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={mrating}
+                onClose={() => setMrating(false)}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                }}
+            >
+                <Fade in={mrating}>
+                    <Box sx={style}>
+                        <form onSubmit={membershipChangeSubmit}>
+                            <Typography id="transition-modal-title" variant="h6" component="h2">
+                                User Membership
+                            </Typography>
+                            <Box display='flex' flexDirection="column">
+                                <Select
+                                    id="member"
+                                    value={member}
+                                    label="Age"
+                                    size="small"
+                                    onChange={e => setMember(e.target.value)}
+                                >
+                                    <MenuItem value={1}>One</MenuItem>
+                                    <MenuItem value={2}>Two</MenuItem>
+                                    <MenuItem value={3}>Three</MenuItem>
+                                    <MenuItem value={4}>Four</MenuItem>
+                                    <MenuItem value={5}>Five</MenuItem>
+                                </Select>
+                            </Box>
+                            <LoadingButton
+                                sx={{ marginTop: 3 }}
+                                size="large"
+                                type="submit"
+                                variant="contained"
+                                color="inherit"
+                            >
+                                CHANGE
                             </LoadingButton>
                         </form>
                     </Box>
