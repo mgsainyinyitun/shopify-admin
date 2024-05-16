@@ -53,7 +53,7 @@ function prepareData(withdraws) {
         pwithdraws.push(
             {
                 no: i+1,
-                bankName:withdraw.bankInfo.name,
+                bankName:withdraw.bankInfoResponse.name,
                 ...withdraw,
             })
         return pwithdraws;
